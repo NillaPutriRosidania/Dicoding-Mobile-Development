@@ -29,7 +29,6 @@ class DetailActivity : AppCompatActivity() {
         tvDetailName.text = subdistrictName
         tvDetailDescription.text = subdistrictDescription
         ivDetailPhoto.setImageResource(subdistrictPhoto)
-
         }
 
     fun shareOnClick(view: View) {

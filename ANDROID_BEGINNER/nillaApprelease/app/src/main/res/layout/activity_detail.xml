@@ -28,6 +28,18 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:padding="16dp" />
+        <TextView
+            android:id="@+id/tv_kemendagri_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="16dp" />
+        <TextView
+            android:id="@+id/tv_number_of_villages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="16dp" />
         <ImageButton
             android:id="@+id/action_share"
             android:layout_width="wrap_content"

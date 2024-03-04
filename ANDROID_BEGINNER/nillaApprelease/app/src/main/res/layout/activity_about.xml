@@ -47,13 +47,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Kampus : Politeknik Negeri Jember"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
                     android:text="E-mail : nillaputrirosidania@gmail.com"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
