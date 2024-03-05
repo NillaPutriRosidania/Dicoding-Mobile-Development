@@ -6,10 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".AboutActivity">
 
+    <TextView
+        android:id="@+id/tv_about_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ABOUT PAGE"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:padding="16dp"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"/>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/material_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tv_about_page"
         android:layout_margin="8dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="4dp">

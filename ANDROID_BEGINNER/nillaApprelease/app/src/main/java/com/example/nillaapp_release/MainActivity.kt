@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        val profileItem = menu?.findItem(R.id.action_profile)
+        val profileItem = menu?.findItem(R.id.about_page)
         profileItem?.setOnMenuItemClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
             true
