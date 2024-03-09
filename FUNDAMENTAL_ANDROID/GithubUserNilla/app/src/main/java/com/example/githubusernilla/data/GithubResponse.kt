@@ -5,71 +5,71 @@ import com.google.gson.annotations.SerializedName
  class GithubResponse(
 
 	@field:SerializedName("total_count")
-	val totalCount: Int,
+	val totalCount: Int? = null,
 
 	@field:SerializedName("incomplete_results")
-	val incompleteResults: Boolean,
+	val incompleteResults: Boolean? = null,
 
 	@field:SerializedName("items")
-	val items: List<ItemsItem>
+	val items: List<ItemsItem?>? = null
 )
 
  class ItemsItem(
 
 	@field:SerializedName("gists_url")
-	val gistsUrl: String,
+	val gistsUrl: String? = null,
 
 	@field:SerializedName("repos_url")
-	val reposUrl: String,
+	val reposUrl: String? = null,
 
 	@field:SerializedName("following_url")
-	val followingUrl: String,
+	val followingUrl: String? = null,
 
 	@field:SerializedName("starred_url")
-	val starredUrl: String,
+	val starredUrl: String? = null,
 
 	@field:SerializedName("login")
-	val login: String,
+	val login: String? = null,
 
 	@field:SerializedName("followers_url")
-	val followersUrl: String,
+	val followersUrl: String? = null,
 
 	@field:SerializedName("type")
-	val type: String,
+	val type: String? = null,
 
 	@field:SerializedName("url")
-	val url: String,
+	val url: String? = null,
 
 	@field:SerializedName("subscriptions_url")
-	val subscriptionsUrl: String,
+	val subscriptionsUrl: String? = null,
 
 	@field:SerializedName("score")
-	val score: Any,
+	val score: Any? = null,
 
 	@field:SerializedName("received_events_url")
-	val receivedEventsUrl: String,
+	val receivedEventsUrl: String? = null,
 
 	@field:SerializedName("avatar_url")
-	val avatarUrl: String,
+	val avatarUrl: String? = null,
 
 	@field:SerializedName("events_url")
-	val eventsUrl: String,
+	val eventsUrl: String? = null,
 
 	@field:SerializedName("html_url")
-	val htmlUrl: String,
+	val htmlUrl: String? = null,
 
 	@field:SerializedName("site_admin")
-	val siteAdmin: Boolean,
+	val siteAdmin: Boolean? = null,
 
 	@field:SerializedName("id")
-	val id: Int,
+	val id: Int? = null,
 
 	@field:SerializedName("gravatar_id")
-	val gravatarId: String,
+	val gravatarId: String? = null,
 
 	@field:SerializedName("node_id")
-	val nodeId: String,
+	val nodeId: String? = null,
 
 	@field:SerializedName("organizations_url")
-	val organizationsUrl: String
+	val organizationsUrl: String? = null
 )

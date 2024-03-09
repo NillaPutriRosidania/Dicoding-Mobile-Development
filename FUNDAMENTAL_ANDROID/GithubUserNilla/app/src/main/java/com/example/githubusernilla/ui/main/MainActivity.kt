@@ -3,10 +3,13 @@ package com.example.githubusernilla.ui.main
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubusernilla.adapter.UserAdapter
 import com.example.githubusernilla.data.GithubResponse
+import com.example.githubusernilla.data.ItemsItem
 import com.example.githubusernilla.databinding.ActivityMainBinding
 import com.example.githubusernilla.retrofit.APIconfig
 import retrofit2.Call
@@ -17,10 +20,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UserAdapter
 
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.userList.observe(this, { userList ->
+            adapter.setData(userList)
+            binding.progressBar.visibility = View.GONE
+        })
 
         adapter = UserAdapter()
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -35,32 +45,15 @@ class MainActivity : AppCompatActivity() {
                 .setOnEditorActionListener { textView, actionId, event ->
                     searchBar.text = searchView.text
                     searchView.hide()
-                    fetchData(searchView.text.toString())
+                    viewModel.setSearchQuery(searchView.text.toString()) // Set search query in ViewModel
+                    fetchData()
                     false
                 }
         }
-        fetchData("Arif")
+        fetchData()
     }
 
-    private fun fetchData(username: String) {
-        val APIservice = APIconfig.create()
-        val call = APIservice.searchUsers(username)
-
-        call.enqueue(object : Callback<GithubResponse> {
-            override fun onResponse(call: Call<GithubResponse>, response: Response<GithubResponse>) {
-                if (response.isSuccessful) {
-                    val userList = response.body()?.items ?: emptyList()
-                    adapter.setData(userList)
-                } else {
-                    Toast.makeText(this@MainActivity, "Failed to load data", Toast.LENGTH_SHORT).show()
-                }
-                binding.progressBar.visibility = View.GONE
-            }
-
-            override fun onFailure(call: Call<GithubResponse>, t: Throwable) {
-                Toast.makeText(this@MainActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                binding.progressBar.visibility = View.GONE
-            }
-        })
+    private fun fetchData() {
+        viewModel.fetchData("Arif") // Fetch data with default query
     }
 }
