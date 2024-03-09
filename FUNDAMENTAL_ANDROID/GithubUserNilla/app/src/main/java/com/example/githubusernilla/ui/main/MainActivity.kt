@@ -2,39 +2,44 @@ package com.example.githubusernilla.ui.main
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.githubusernilla.retrofit.APIconfig
+import com.example.githubusernilla.adapter.UserAdapter
 import com.example.githubusernilla.data.GithubResponse
+import com.example.githubusernilla.databinding.ActivityMainBinding
+import com.example.githubusernilla.retrofit.APIconfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.example.githubusernilla.R
-import com.example.githubusernilla.adapter.UserAdapter
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var progressBar: ProgressBar
+    private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        recyclerView = findViewById(R.id.recyclerView)
-        progressBar = findViewById(R.id.progressBar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         adapter = UserAdapter()
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
 
-        progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
 
+        with(binding) {
+            searchView.setupWithSearchBar(searchBar)
+            searchView
+                .editText
+                .setOnEditorActionListener { textView, actionId, event ->
+                    searchBar.text = searchView.text
+                    searchView.hide()
+                    fetchData(searchView.text.toString())
+                    false
+                }
+        }
         fetchData("Arif")
-
     }
 
     private fun fetchData(username: String) {
@@ -49,12 +54,12 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this@MainActivity, "Failed to load data", Toast.LENGTH_SHORT).show()
                 }
-                progressBar.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
             }
 
             override fun onFailure(call: Call<GithubResponse>, t: Throwable) {
                 Toast.makeText(this@MainActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                progressBar.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
             }
         })
     }
