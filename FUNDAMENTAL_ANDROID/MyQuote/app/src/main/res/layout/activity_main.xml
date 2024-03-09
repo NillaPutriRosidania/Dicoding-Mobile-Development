@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical"
-    tools:context="com.dicoding.picodiploma.myquote.MainActivity">
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/tvQuote"
