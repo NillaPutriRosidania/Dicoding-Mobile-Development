@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             android:text="Following: 0" />
 
+
     </LinearLayout>
 
 </LinearLayout>

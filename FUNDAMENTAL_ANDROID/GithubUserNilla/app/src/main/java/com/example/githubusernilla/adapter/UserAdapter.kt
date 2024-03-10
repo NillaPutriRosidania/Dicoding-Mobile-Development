@@ -1,6 +1,5 @@
 package com.example.githubusernilla.adapter
 
-import android.content.ClipData.Item
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.githubusernilla.R
 import com.example.githubusernilla.data.ItemsItem
 
-class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
-
+class UserAdapter(private val onUserClickListener: OnUserClickListener) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     private val userList: MutableList<ItemsItem> = mutableListOf()
 
     fun setData(newData: List<ItemsItem>) {
@@ -20,7 +18,23 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    interface OnUserClickListener {
+        fun onUserClick(user: ItemsItem)
+    }
+
+    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val user = userList[position]
+                onUserClickListener.onUserClick(user)
+            }
+        }
+
         fun bind(user: ItemsItem) {
             with(itemView) {
                 Glide.with(itemView.context)
@@ -44,4 +58,5 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bind(userList[position])
     }
+
 }

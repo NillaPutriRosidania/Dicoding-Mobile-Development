@@ -1,5 +1,6 @@
 package com.example.githubusernilla.data
 
+import androidx.versionedparcelable.ParcelField
 import com.google.gson.annotations.SerializedName
 
  class GithubResponse(
@@ -13,8 +14,7 @@ import com.google.gson.annotations.SerializedName
 	@field:SerializedName("items")
 	val items: List<ItemsItem?>? = null
 )
-
- class ItemsItem(
+class ItemsItem(
 
 	@field:SerializedName("gists_url")
 	val gistsUrl: String? = null,
