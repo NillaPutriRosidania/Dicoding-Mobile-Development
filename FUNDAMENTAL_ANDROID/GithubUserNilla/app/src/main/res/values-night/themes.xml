@@ -1,7 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.GithubUserNilla" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/merahMuda</item>
+        <item name="colorPrimaryVariant">@color/merahMuda</item>
+        <item name="background_color">@color/pinkTua</item>
+        <item name="android:fontFamily">@font/poppinsmedium</item>
     </style>
 </resources>

@@ -1,62 +1,62 @@
 package com.example.githubusernilla.adapter
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.githubusernilla.R
 import com.example.githubusernilla.data.ItemsItem
+import com.example.githubusernilla.databinding.ListUserBinding
 
-class UserAdapter(private val onUserClickListener: OnUserClickListener) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
-    private val userList: MutableList<ItemsItem> = mutableListOf()
-
-    fun setData(newData: List<ItemsItem>) {
-        userList.clear()
-        userList.addAll(newData)
-        notifyDataSetChanged()
-    }
+class UserAdapter(
+    private val onUserClickListener: OnUserClickListener
+) : ListAdapter<ItemsItem, UserAdapter.UserViewHolder>(UserDiffCallback()) {
 
     interface OnUserClickListener {
         fun onUserClick(user: ItemsItem)
     }
 
-    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class UserViewHolder(private val binding: ListUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         init {
-            itemView.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                val user = userList[position]
-                onUserClickListener.onUserClick(user)
+            binding.root.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val user = getItem(position)
+                    onUserClickListener.onUserClick(user)
+                }
             }
         }
 
         fun bind(user: ItemsItem) {
-            with(itemView) {
-                Glide.with(itemView.context)
+            binding.apply {
+                Glide.with(root)
                     .load(user.avatarUrl)
                     .apply(RequestOptions().override(100, 100))
-                    .into(findViewById(R.id.avatarImageView))
-                findViewById<android.widget.TextView>(R.id.usernameTextView).text = user.login
+                    .into(avatarImageView)
+                usernameTextView.text = user.login
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_user, parent, false)
-        return UserViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return userList.size
+        val binding = ListUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return UserViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.bind(userList[position])
+        holder.bind(getItem(position))
     }
 
+    class UserDiffCallback : DiffUtil.ItemCallback<ItemsItem>() {
+        override fun areItemsTheSame(oldItem: ItemsItem, newItem: ItemsItem): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: ItemsItem, newItem: ItemsItem): Boolean {
+            return oldItem == newItem
+        }
+    }
 }

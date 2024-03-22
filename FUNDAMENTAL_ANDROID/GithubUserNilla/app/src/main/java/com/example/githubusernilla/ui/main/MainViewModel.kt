@@ -12,7 +12,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val pref: SettingPreferences) : ViewModel() {
     private val _userList = MutableLiveData<List<ItemsItem>>()
     val userList: LiveData<List<ItemsItem>> = _userList
 
@@ -33,7 +33,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun fetchUserDetail(username: String) {
-        UserRepository.getUserDetail(username) { userDetail ->
+        UserDetailRepository.getUserDetail(username) { userDetail ->
             _userDetail.postValue(userDetail)
         }
     }
@@ -45,8 +45,7 @@ class MainViewModel : ViewModel() {
 
         call.enqueue(object : Callback<GithubResponse> {
             override fun onResponse(
-                call: Call<GithubResponse>,
-                response: Response<GithubResponse>
+                call: Call<GithubResponse>, response: Response<GithubResponse>
             ) {
                 if (response.isSuccessful) {
                     val userList = response.body()?.items ?: emptyList()
